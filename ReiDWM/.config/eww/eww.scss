@@ -1,0 +1,332 @@
+
+//  ──┐┬ ┬┬ ┬ ┌─┐┌─┐┌─┐┌─┐
+//  ├┤ ││││││ └─┐│  └─┐└─┐
+//  ──┘└┴┘└┴┘o└─┘└─┘└─┘└─┘
+
+* {
+  all: unset;
+}
+
+//  ┌─┐┌─┐┬  ┌─┐┬─┐┌─┐
+//  │  │ ││  │ │├┬┘└─┐
+//  └─┘└─┘┴─┘└─┘┴└─└─┘
+
+$background : #121111;
+$foreground : #dbdfdf;
+$background-alt : #191919;
+$background-light : #252525;
+$foreground-alt : #b7b7b7;
+$red : #af575b;
+$red-light : #c15a5e;
+$green : #7d8a6b;
+$green-light : #8fa176;
+$yellow : #caac79;
+$yellow-light : #d8b170;
+$blue : #7d95ae;
+$blue-light : #809fbe;
+$cyan : #6b8f8a;
+$cyan-light : #8cb5af;
+$magenta : #a07ea7;
+$magenta-light : #b183ba;
+$accent : $blue-light;
+.accent {
+  color: $accent;
+}
+.comment {
+  color: #5a5858;
+}
+.red {
+  color: $red;
+}
+.yellow {
+  color: $yellow;
+}
+.green {
+  color: $green;
+}
+.magenta {
+  color: $magenta;
+}
+.blue {
+  color: $blue;
+}
+.cyan {
+  color: $cyan;
+}
+.white {
+  color: $foreground-alt;
+}
+
+
+
+//  ──┐┌─┐┌┐┌┌─┐┬  
+//  ├─┘├─┤│││├┤ │  
+//  ┴  ┴ ┴┘└┘└─┘┴─┘
+
+
+.panel {
+  background-color: $background;
+  padding: 1.25rem;
+  border-radius: 4px;
+
+  &_profile {
+    font-family: "Iosevka Nerd Font";
+    padding: 1rem 0;
+    padding-bottom: 1.3rem;
+
+    &_picture {
+      background-image: url('Assets/Pfp.jpg');
+      background-size: 42px;
+      background-position: 50% 35%;
+      min-height: 42px;
+      min-width: 42px;
+      border-radius: 100%;
+    }
+
+    &_name {
+      font-weight: 300;
+      margin-left: 1rem;
+      font-size: 1.2rem;
+    }
+
+    &_time {
+      &_text {
+        font-weight: 300;
+        font-size: 1.3rem;
+      }
+
+      &_suffix {
+        margin-left: 0.4rem;
+      }
+    }
+  }
+
+  &_button {
+    font-family: "Material Design Icons Desktop";
+    border-radius: 4px;
+    background: $background-alt;
+    padding: 0rem;
+    font-size: 1.8rem;
+
+    &_icon_box {
+      padding: 1rem;
+    }
+
+    &_alt {
+      padding: 1rem;
+    }
+
+    &_label {
+      font-family: "Iosevka Nerd Font";
+      font-size: 1.1rem;
+    }
+  }
+
+  &_vertical_box {
+    margin-top: 2rem;
+  }
+  
+  &_scales {
+    margin: 2rem 0;
+    font-family: "Iosevka Nerd Font";
+    padding: 1.3rem;
+    background-color: $background-alt;
+    border-radius: 4px;
+  }
+
+  &_battery {
+    font-family: "Iosevka Nerd Font";
+    font-size: 1.2rem;
+    color: $accent;
+    background-color: $background-alt;
+    padding: 1rem;
+    border-radius: 2px;
+  }
+
+  &_power {
+    font-family: "material design icons desktop";
+    font-size: 1.5rem;
+
+    &btn {
+      background-color: $background-alt;
+      padding: .5rem;
+    }
+  }
+
+  &_focus_toggle {
+    border-radius: 32px;
+    background: $background-alt;
+  }
+
+  &_focus_box {
+    border-radius: 32px;
+    background: $accent;
+    padding: 0 .5rem;
+  }
+
+  &_focus_text {
+    font-family: "Iosevka Nerd Font";
+
+  }
+
+
+  &_sep {
+    background-color: #5a5858;
+    min-height: 1px;
+    min-width: 1px;
+
+    &_box {
+      padding: 0 1rem;
+    }
+  }
+
+  &_song {
+
+    &_ctl {
+      &_btn {
+        background-color: $background-alt;
+        padding: 1.2rem;
+        font-size: 1.2rem;
+        border-radius: 5px;
+      }
+
+      margin-bottom: 1.5rem;
+      margin-top: .3rem;
+      font-family: "material design icons desktop";
+    }
+
+    &_box {
+      font-family: "Iosevka Nerd Font";
+      background-color: $background-alt;
+      padding: 2rem;
+      border-radius: 4px;
+    }
+
+    &_cont {
+      margin-bottom: 1.3rem;
+    }
+
+    &_btn {
+      margin-top: 4rem;
+      font-size: 1.7rem;
+      font-family: "material design icons desktop";
+    }
+
+    &_name {
+      font-size: 1.4rem;
+      font-weight: 300;
+    }
+
+    &_artist {
+      font-size: 1.1rem;
+      margin-top: .5rem;
+      font-weight: 300;
+    }
+
+    &_icon {
+      background-color: $background-light;
+      font-family: "material design icons desktop";
+      font-size: 4rem;
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+    }
+  }
+
+  &_statprog {
+    background-color: $background-alt;
+    padding: 1.4rem;
+    border-radius: 4px;
+
+    &_label {
+      font-family: "material design icons desktop";
+      padding: 2.2rem;
+      font-size: 2rem;
+    }
+
+    &_uplab {
+      font-family: 'Iosevka Nerd Font';
+      margin-bottom: 1rem;
+    }
+
+    &_bar {
+      background-color: $background-light;
+    }
+  }
+
+  &_stats {
+    margin-bottom: 2rem;
+    margin-top: .4rem;
+  }
+}
+.active {
+  background: $accent;
+  color: $background;
+}
+.s121 {
+  font-size: 1.6rem;
+}
+
+//  ┌─┐┌─┐┌┬┐┌┬┐┬┌┐┌┌─┐┌─┐
+//  └─┐├┤  │  │ │││││ ┬└─┐
+//  └─┘└─┘ ┴  ┴ ┴┘└┘└─┘└─┘
+
+
+.settings {
+  background-color: $background;
+  padding: 1.25rem;
+  border-radius: 2px;
+  
+  &_vertical_box {
+    margin-top: 1rem;
+    margin-bottom: 0.2rem;
+  }
+}
+
+
+//  ┌─┐┬  ┬┌┬┐┌─┐┬─┐┌─┐
+//  └─┐│  │ ││├┤ ├┬┘└─┐
+//  └─┘┴─┘┴─┴┘└─┘┴└─└─┘ 
+
+
+.slider {
+  background-color: $background;
+  padding: 1.25rem;
+  border-radius: 2px;
+  
+  &_scales {
+    font-family: "Iosevka Nerd Font";
+    padding: 1.3rem;
+    background-color: $background-alt;
+    border-radius: 3px;
+  }
+  
+  &_scale_box {
+    font-family: "Iosevka Nerd Font";
+    background-color: $background-alt;
+    padding: 2rem;
+    border-radius: 5px;
+  }
+  
+  &_scale_label {
+    font-family: "Material Design Icons desktop";
+    font-size: 1.7rem;
+    color: $foreground-alt;
+  }
+  
+  &_scale trough {
+    min-height: 1rem;
+    border-radius: 20px;
+    background-color: $background-light;
+    // border: 1px solid $blue;
+  }
+  
+  &_scale_volume trough highlight {
+    border-radius: 20px;
+    background: $accent;
+  }
+
+  &_scale_brightness trough highlight {
+    border-radius: 20px;
+    background: $accent;
+  }
+}

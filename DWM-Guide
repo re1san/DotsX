@@ -1,0 +1,23 @@
+sudo pacman -S xorg picom 
+
+$ cat /usr/share/xsessions/reiDwm.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Name=reiDWM
+Comment=Dynamic Window Manager
+Exec=startdwm
+Icon=dwm
+Type=XSession
+
+$ cat /home/_ryu/.local/bin/startdwm
+#!/bin/sh
+picom &
+exec dwm
+
+Add /home/_ryu/.local/bin/startdwm to PATH in .zshrc or what-ever!
+
+Clone a version of Dwm
+
+make & make install!!
+
+

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+<<*
+
+┌─┐┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┐ ┌─┐┬─┐
+└─┐ │ ├─┤ │ │ │└─┐├┴┐├─┤├┬┘
+└─┘ ┴ ┴ ┴ ┴ └─┘└─┘└─┘┴ ┴┴└─
+
+┌─┐┌─┐┬  ┌─┐┌┐┌┌┬┐┌─┐┬─┐
+│  ├─┤│  ├┤ │││ ││├─┤├┬┘
+└─┘┴ ┴┴─┘└─┘┘└┘─┴┘┴ ┴┴└─
+
+─ ryuJin25
+
+*
+
+case $BUTTON in
+	1) ~/.local/bin/rofiscripts/pop-calendar;; 
+	3) rofi -modi TODO:~/.local/bin/rofiscripts/rofi-todo -show TODO -theme ~/.config/rofi/generic.rasi ;;
+esac
+

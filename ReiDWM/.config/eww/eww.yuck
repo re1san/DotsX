@@ -1,0 +1,249 @@
+
+;;  ──┐┬ ┬┬ ┬┬ ┬┬ ┬┌─┐┬┌─
+;;  ├┤ ││││││└┬┘│ ││  ├┴┐
+;;  ──┘└┴┘└┴┘o┴ └─┘└─┘┴ ┴
+
+  
+;;  ┬  ┬┌─┐┬─┐┬┌─┐┌┐ ┬  ┌─┐┌─┐
+;;  └┐┌┘├─┤├┬┘│├─┤├┴┐│  ├┤ └─┐
+;;   └┘ ┴ ┴┴└─┴┴ ┴└─┘┴─┘└─┘└─┘
+
+
+(defpoll THOURTIME :interval "40s" `date +"%Aメ%H:%M"`)
+(defpoll AP_ACTIVE :interval '1s' "~/.config/eww/scripts/airplanemode --class")
+(defpoll DND_ACTIVE :interval '1s' "~/.config/eww/scripts/donotdisturb --class")
+(defpoll WIFI_ACTIVE :interval '1s' "~/.config/eww/scripts/wifi --class")
+(defpoll BT_ACTIVE :interval '1s' "~/.config/eww/scripts/bluetooth --class")
+(defpoll PICOM_ACTIVE :interval '1s' "~/.config/eww/scripts/picom --class")
+(defpoll MICMUTE :interval '1s' 'pamixer --source 1 --get-mute')
+
+(defpoll BNESS :interval "1s" `brillo`)
+(defpoll VOL :interval "1s" `pamixer --get-volume`)
+
+(defpoll BAT_ICON :interval "1m" `~/.local/bin/battery --icon`)
+(defpoll BAT_PERC :interval "1m" `~/.local/bin/battery --val`)
+
+(defpoll SONGNAME :interval "1s" "~/.config/eww/scripts/spotify --song")
+(defpoll ARTIST :interval "1s" "~/.config/eww/scripts/spotify --artist")
+(defpoll ICON :interval "1s" "~/.config/eww/scripts/spotify --icon")
+
+;; (defpoll FOCUSMODE :interval "1s" `~/.local/bin/hostsafe status`)
+
+
+;;  ┬ ┬┬┌┬┐┌─┐┌─┐┌┬┐┌─┐
+;;  ││││ │││ ┬├┤  │ └─┐
+;;  ─┴┘┴─┴┘└─┘└─┘ ┴ └─┘
+
+
+;; ──────────────────────────────────────── Panel ────────────────────────────────────────
+
+(defwidget panel[]
+  (box :orientation 'v' :hexpand true :space-evenly false :class 'panel'
+    (panel_profile)
+    (panel_settings)
+    (panel_scales)
+    (panel_song)
+    (panel_stats)
+    (panel_footer)
+  )
+)
+
+;; ──────────────────────────────────────── Profile ────────────────────────────────────────
+
+(defwidget panel_profile []
+  (box :orientation 'v' :space-evenly false
+    (box :orientation 'h' :class 'panel_profile' :space-evenly false
+      (box :class "panel_profile_picture" )
+      (box :hexpand true :halign 'start' :class " white panel_profile_name" "_ryuメEvelyn" )
+      (box :class "panel_profile_time" :orientation 'h' :space-evenly false
+          (box :class 'panel_profile_time_text white' "${THOURTIME}")
+      )
+    )
+  (panel_sep)
+  )
+)
+
+(defwidget panel_sep []
+  (box :orientation 'h' :class 'panel_sep_box'
+      (box :class 'panel_sep')
+    )
+)
+
+;; ──────────────────────────────────────── Song ────────────────────────────────────────
+
+(defwidget panel_song[]
+  (box :orientation 'h' :class 'panel_song_cont' :space-evenly false :spacing 6
+  (box :orientation 'h' :hexpand true :class 'panel_song_box' :space-evenly false
+    (box :orientation 'v' :class 'panel_song' :space-evenly false :hexpand true :halign 'start'
+      (box :halign 'start' :class 'panel_song_name white' SONGNAME)
+      (box :halign 'start' :class 'panel_song_artist white' ARTIST)
+      (box :class 'panel_song_controls' :orientation 'h' :spacing 10 :space-evenly false
+            (button :class "panel_song_btn white prev" :onclick "playerctl --player=spotify previous"  "󰙣")
+            (button :class "panel_song_btn accent play" :onclick "playerctl --player=spotify play-pause" "${ICON}" )
+            (button :class "panel_song_btn white symsongbtn next" :onclick "playerctl --player=spotify next" "󰙡")
+      )
+    )
+    (box :class "panel_song_icon accent" "󰎆")
+  )
+  )
+)
+
+;; ──────────────────────────────────────── Stats ────────────────────────────────────────
+
+(defwidget panel_statprog[label value icon]
+  (box :class 'panel_statprog' :orientation 'v' :space-evenly false
+      (label :class 'panel_statprog_uplab white' :halign 'start' :text label)
+       (circular-progress :class "accent panel_statprog_bar"
+                   :value value
+                   :thickness 7
+                   :clockwise true
+                   :start-at 30
+         (label :class 'accent panel_statprog_label' :text icon))
+    )
+)
+
+(defwidget panel_stats[]
+  (box :orientation 'h' :class 'panel_stats' :spacing 20
+      (panel_statprog :label 'RAM' :value {EWW_RAM.used_mem_perc} :icon '󰘚' )
+      (panel_statprog :label 'CPU' :value {round(EWW_CPU.avg, 0)} :icon '󰍛' )
+      (panel_statprog :label 'DISK' :value {EWW_DISK["/"].used_perc} :icon '󰋊' )
+    )
+)
+
+;; ──────────────────────────────────────── Settings ────────────────────────────────────────
+
+(defwidget system-settings[]
+  (box :orientation 'v' :hexpand true :space-evenly false :class 'settings'
+    (settings)
+  )
+)
+
+(defwidget panel_settings[]
+  (box :orientation 'v' :class 'panel_vertical_box' :space-evenly false :spacing 20
+      (box :orientation 'h' :halign 'center' :space-evenly false :spacing 15
+          (panel_button :label 'Wifi' :func "~/.config/eww/scripts/wifi --toggle" :altfunc "~/.local/bin/rofiscripts/wifimenu &" :icon '󰤨' :activevar WIFI_ACTIVE)
+          (panel_button :label 'Bluetooth' :func "~/.config/eww/scripts/bluetooth --toggle" :altfunc "~/.local/bin/rofiscripts/bluetoothmenu" :icon '󰂯' :activevar BT_ACTIVE)
+          (panel_button :label 'Do Not Disturb' :func "~/.config/eww/scripts/donotdisturb --toggle" :altfunc "st -e nvim ~/.config/dunst/dunstrc &" :icon '󰍶' :activevar DND_ACTIVE)
+        )
+      (box :orientation 'h' :halign 'center' :space-evenly false :spacing 15
+          (panel_button :label 'Airplane Mode' :func "~/.config/eww/scripts/airplanemode --toggle" :altfunc "dunstify 'Toggle Airplane Mode'" :icon '󰀝' :activevar AP_ACTIVE)
+          (panel_button :label 'Compositer' :func "~/.config/eww/scripts/picom --toggle" :altfunc "st -e nvim ~/.config/picom/picom.conf &" :icon '󱂬' :activevar PICOM_ACTIVE)
+          (panel_button :label 'Mic' :func "pamixer --source 1 -t" :altfunc "pavucontrol &" :icon '󰍬' :activevar "${MICMUTE == 'true'? 'active' : ''}")
+        )
+  )
+)
+
+(defwidget settings[]
+  (box :orientation 'v' :class 'settings_vertical_box' :space-evenly false :spacing 20
+      (box :orientation 'h' :halign 'center' :space-evenly false :spacing 15
+          (panel_button :label 'Wifi' :func "~/.config/eww/scripts/wifi --toggle" :altfunc "~/.local/bin/rofiscripts/wifimenu &" :icon '󰤨' :activevar WIFI_ACTIVE)
+          (panel_button :label 'Bluetooth' :func "~/.config/eww/scripts/bluetooth --toggle" :altfunc "~/.local/bin/rofiscripts/bluetoothmenu" :icon '󰂯' :activevar BT_ACTIVE)
+          (panel_button :label 'Do Not Disturb' :func "~/.config/eww/scripts/donotdisturb --toggle" :altfunc "st -e nvim ~/.config/dunst/dunstrc &" :icon '󰍶' :activevar DND_ACTIVE)
+        )
+      (box :orientation 'h' :halign 'center' :space-evenly false :spacing 15
+          (panel_button :label 'Airplane Mode' :func "~/.config/eww/scripts/airplanemode --toggle" :altfunc "dunstify 'Toggle Airplane Mode'" :icon '󰀝' :activevar AP_ACTIVE)
+          (panel_button :label 'Compositer' :func "~/.config/eww/scripts/picom --toggle" :altfunc "st -e nvim ~/.config/picom/picom.conf &" :icon '󱂬' :activevar PICOM_ACTIVE)
+          (panel_button :label 'Mic' :func "pamixer --source 1 -t" :altfunc "pavucontrol &" :icon '󰍬' :activevar "${MICMUTE == 'true'? 'active' : ''}")
+        )
+  )
+)
+
+(defwidget panel_button[func label altfunc icon activevar]
+  (box :orientation 'v' :class 'white panel_button_whole' :space-evenly false :spacing 8
+    (box :orientation 'h' :hexpand true :class 'panel_button ${activevar == "active" ? "active" : ""}' :space-evenly false :width 137 :height 90 
+      (button :onclick func  :hexpand true :class 'panel_button_icon_box'
+          (label :class 'panel_button_icon' :halign 'start' :text icon)
+        )
+      (button :onclick altfunc :halign 'end' :class 'panel_button_alt' "󰅂")
+    )
+    (label :class 'panel_button_label' :text label)
+  )
+)
+
+;; ──────────────────────────────────────── Sliders ────────────────────────────────────────
+
+(defwidget sliders[]
+  (box :orientation 'v' :hexpand true :space-evenly false :class 'slider'
+    (slider_scales)
+  )
+)
+(defwidget panel_scales[]
+  (box :orientation 'v' :class 'panel_scales' :space-evenly false :spacing 16
+      (slider_scale :func "pamixer --set-volume $(printf %d {})" :scalelabel "slider_scale_volume" :value VOL :label "󰕾")
+      (slider_scale :func "pkexec brillo -S {}%" :scalelabel "slider_scale_brightness" :value BNESS :label "󰃞")
+    )
+)
+(defwidget slider_scales[]
+  (box :orientation 'v' :class 'slider_scales' :space-evenly false :spacing 16
+      (slider_scale :func "pamixer --set-volume $(printf %d {})" :scalelabel "slider_scale_volume" :value VOL :label "󰕾")
+      (slider_scale :func "pkexec brillo -S {}%" :scalelabel "slider_scale_brightness" :value BNESS :label "󰃞")
+    )
+)
+(defwidget slider_scale[label value func scalelabel]
+    (box :orientation 'h' :space-evenly false :spacing 16 
+      (box :orientation "h" :valign "center" :class "slider_scale_label" label)
+      (scale :class "slider_scale white ${scalelabel}"
+              :min 0
+              :hexpand true
+              :max 100
+              :orientation "h"
+              :value value
+              :onchange func
+              :valign 'center')
+    )
+)
+
+;; ──────────────────────────────────────── Footer ────────────────────────────────────────
+
+(defwidget panel_footer[]
+  (box :orientation 'h' :class 'panel_footer' :space-evenly false
+      (box :class 'panel_battery' :hexpand true  :halign 'start' '${BAT_ICON} ${BAT_PERC}%')
+    )
+)
+
+;; (defwidget panel_focus[]
+;;   (box :orientation 'h':class 'panel_focus' :space-evenly false :spacing 10
+;;         (box :class 'white panel_focus_text' 'Chill')
+;;         (box :valign 'center' :class 'panel_focus_toggle' :height 20 :width 70 :space-evenly false
+;;             (button :valign 'center' :onclick '~/.local/bin/hostsafe toggle' :class 'panel_focus_box' :height 24 :valign 'center' :hexpand true :halign '${focusmode == "true" ? "end" : "start"}' :width 30)
+;;           )
+;;         (box :class 'white panel_focus_text' 'Focus')
+;;     )
+;; )
+
+
+;;  ┬ ┬┬┌┐┌┌┬┐┌─┐┬ ┬┌─┐
+;;  │││││││ │││ ││││└─┐
+;;  ─┴┘┴┘└┘─┴┘└─┘└┴┘└─┘
+
+
+(defwindow panel
+           :monitor 0
+           :geometry (geometry :x "-415px"
+                               :y "42px"
+                               :anchor "top right")
+           :wm-ignore true
+           :stacking "fg"
+  (panel))
+
+
+(defwindow sliders
+           :monitor 0
+           :geometry (geometry :x "-320px"
+                               :y "42px"
+                               :width 350
+                               :anchor "top right")
+           :wm-ignore true
+           :stacking "fg"
+  (sliders)) 
+
+
+(defwindow system-settings
+           :monitor 0
+           :geometry (geometry :x "-50px"
+                               :y "42px"
+                               :anchor "top right")
+           :wm-ignore true
+           :stacking "fg"
+  (system-settings))
+	

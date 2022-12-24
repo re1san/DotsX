@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+<<*
+
+┬  ┌─┐┌─┐┬┌─
+│  │ ││  ├┴┐
+┴─┘└─┘└─┘┴ ┴ 
+
+─ ryuJin25
+
+*
+
+sleep 0.2
+playerctl play-pause
+#slock &
+betterlockscreen -l dim

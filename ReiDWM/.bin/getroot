@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export SUDO_ASKPASS=~/.local/bin/rofiscripts/askpass
+
+# Execute the application
+sudo -A $1

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+<<*
+
+┌─┐┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┐ ┌─┐┬─┐
+└─┐ │ ├─┤ │ │ │└─┐├┴┐├─┤├┬┘
+└─┘ ┴ ┴ ┴ ┴ └─┘└─┘└─┘┴ ┴┴└─
+
+──┐┬─┐┌─┐┌─┐┬┬  ┌─┐
+├─┘├┬┘│ │├┤ ││  ├┤ 
+┴  ┴└─└─┘└  ┴┴─┘└─┘
+
+─ ryuJin25
+
+*
+case $BUTTON in
+	1) $HOME/.local/bin/ewwscripts/launch_panel ;;
+  3) $HOME/.local/bin/ewwscripts/launch_panel ;; 
+esac

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+<<*
+
+──┐┬ ┬┬ ┬┌─┐┌─┐┬─┐┬┌─┐┌┬┐┌─┐
+├┤ ││││││└─┐│  ├┬┘│├─┘ │ └─┐
+──┘└┴┘└┴┘└─┘└─┘┴└─┴┴   ┴ └─┘
+
+┬  ┌─┐┬ ┬┌┐┌┌─┐┬ ┬   ┌─┐┌─┐┌┬┐┌┬┐┬┌┐┌┌─┐┌─┐
+│  ├─┤│ │││││  ├─┤───└─┐├┤  │  │ │││││ ┬└─┐
+┴─┘┴ ┴└─┘┘└┘└─┘┴ ┴   └─┘└─┘ ┴  ┴ ┴┘└┘└─┘└─┘
+
+─ ryuJin25
+
+*
+
+FILE="$HOME/.cache/eww_launch.settings"
+CFG="$HOME/.config/eww"
+EWW="$HOME/.local/bin/eww"
+
+## Run eww daemon if not running already
+if [[ ! `pidof eww` ]]; then
+	${EWW} daemon
+	sleep 1
+fi
+
+## Open widgets 
+open_eww() {
+	${EWW} --config "$CFG" open system-settings
+}
+
+## Launch or close widgets accordingly
+if [[ ! -f "$FILE" ]]; then
+	touch "$FILE"
+	open_eww
+else
+	${EWW} --config "$CFG" close system-settings
+	rm "$FILE"
+fi

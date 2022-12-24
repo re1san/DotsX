@@ -1,0 +1,20 @@
+#!/bin/bash
+
+<<*
+
+┌─┐┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┐ ┌─┐┬─┐
+└─┐ │ ├─┤ │ │ │└─┐├┴┐├─┤├┬┘
+└─┘ ┴ ┴ ┴ ┴ └─┘└─┘└─┘┴ ┴┴└─
+
+┌─┐┌─┐┬ ┬┌┐┌┌┬┐
+└─┐│ ││ ││││ ││
+└─┘└─┘└─┘┘└┘─┴┘
+
+─ ryuJin25
+
+*
+
+case $BUTTON in
+	3) ~/.local/bin/changevolume mute ;;
+	1) ~/.local/bin/ewwscripts/launch_sliders ;;
+esac
