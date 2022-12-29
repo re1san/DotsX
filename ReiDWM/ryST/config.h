@@ -156,7 +156,7 @@ static unsigned int cursorshape = 2;
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 80;
+static unsigned int cols = 120;
 static unsigned int rows = 24;
 
 /*

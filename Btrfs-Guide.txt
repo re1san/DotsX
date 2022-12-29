@@ -1,0 +1,35 @@
+sudo fdisk -l
+cat /etc/fstab
+# Same Uuid for all the Subvol's unlike Partition's => 1st Diff
+
+lsblk
+# If u have disk of 200G then the subvol's will be / => 200G and /home => 200G, but how?
+# Because the Subvol's dont have fix size :)
+
+sudo btrfs filesystem usage /
+# Subvol's share the free space that is free space show by / or /home will be same
+# However it doesnot mean you cant have limit imposed on the subvol's, 
+# For that we have QUOTA'S
+
+# Snapshot's => It will give us the power to revert back into time where the snapshot was created !
+## Create a snapshot
+sudo btrfs subvolume snapshot /home /home/home-snapshot-1 	## We need to tell where to mount the snapshot
+
+## List the snapshots/subvol, Snapshots are also subvol's
+sudo btrfs subvolume list /home 
+
+## Revert to the snapshot, edit the /etc/fstab and change the 'subvolid' of of /home to snapshot 
+sudo cp /etc/fstab /etc/fstab.bak ## Create backup
+sudo nano /etc/fstab 			  ## Remove subvol and use subvolid
+reboot
+
+# Create subvol 
+btrfs subvolume create /mnt/btrfs-data/myvol-1
+btrfs subvolume list /mnt/btrfs-data
+
+# Check usage
+btrfs filesystem df /mnt/btrfs-data
+
+
+
+
